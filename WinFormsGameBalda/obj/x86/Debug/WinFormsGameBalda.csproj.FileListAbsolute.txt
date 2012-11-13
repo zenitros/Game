@@ -1,0 +1,7 @@
+D:\GitHub\Projects\Game\WinFormsGameBalda\bin\Debug\WinFormsGameBalda.exe
+D:\GitHub\Projects\Game\WinFormsGameBalda\bin\Debug\WinFormsGameBalda.pdb
+D:\GitHub\Projects\Game\WinFormsGameBalda\obj\x86\Debug\WinFormsGameBalda.Form1.resources
+D:\GitHub\Projects\Game\WinFormsGameBalda\obj\x86\Debug\WinFormsGameBalda.Properties.Resources.resources
+D:\GitHub\Projects\Game\WinFormsGameBalda\obj\x86\Debug\WinFormsGameBalda.csproj.GenerateResource.Cache
+D:\GitHub\Projects\Game\WinFormsGameBalda\obj\x86\Debug\WinFormsGameBalda.exe
+D:\GitHub\Projects\Game\WinFormsGameBalda\obj\x86\Debug\WinFormsGameBalda.pdb
