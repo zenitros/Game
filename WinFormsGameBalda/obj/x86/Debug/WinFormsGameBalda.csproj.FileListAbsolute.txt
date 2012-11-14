@@ -5,3 +5,4 @@ D:\GitHub\Projects\Game\WinFormsGameBalda\obj\x86\Debug\WinFormsGameBalda.Proper
 D:\GitHub\Projects\Game\WinFormsGameBalda\obj\x86\Debug\WinFormsGameBalda.csproj.GenerateResource.Cache
 D:\GitHub\Projects\Game\WinFormsGameBalda\obj\x86\Debug\WinFormsGameBalda.exe
 D:\GitHub\Projects\Game\WinFormsGameBalda\obj\x86\Debug\WinFormsGameBalda.pdb
+D:\GitHub\Projects\Game\WinFormsGameBalda\obj\x86\Debug\WinFormsGameBalda.csprojResolveAssemblyReference.cache

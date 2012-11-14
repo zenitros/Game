@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.radButton1 = new Telerik.WinControls.UI.RadButton();
             this.radGroupBoxPl1 = new Telerik.WinControls.UI.RadGroupBox();
             this.radTxtBxScorePl1 = new Telerik.WinControls.UI.RadTextBox();
@@ -70,7 +70,7 @@
             // 
             // radButton1
             // 
-            this.radButton1.Location = new System.Drawing.Point(256, 333);
+            this.radButton1.Location = new System.Drawing.Point(251, 260);
             this.radButton1.Name = "radButton1";
             this.radButton1.Size = new System.Drawing.Size(144, 33);
             this.radButton1.TabIndex = 0;
@@ -99,17 +99,17 @@
             // 
             // 
             this.radGroupBoxPl1.RootElement.Padding = new System.Windows.Forms.Padding(10, 20, 10, 10);
-            this.radGroupBoxPl1.Size = new System.Drawing.Size(200, 330);
+            this.radGroupBoxPl1.Size = new System.Drawing.Size(200, 257);
             this.radGroupBoxPl1.TabIndex = 2;
             this.radGroupBoxPl1.Text = "Player 1";
             this.radGroupBoxPl1.ThemeName = "Aqua";
             // 
             // radTxtBxScorePl1
             // 
-            this.radTxtBxScorePl1.Location = new System.Drawing.Point(58, 257);
+            this.radTxtBxScorePl1.Location = new System.Drawing.Point(13, 221);
             this.radTxtBxScorePl1.Name = "radTxtBxScorePl1";
             this.radTxtBxScorePl1.ReadOnly = true;
-            this.radTxtBxScorePl1.Size = new System.Drawing.Size(129, 20);
+            this.radTxtBxScorePl1.Size = new System.Drawing.Size(174, 20);
             this.radTxtBxScorePl1.TabIndex = 5;
             this.radTxtBxScorePl1.TabStop = false;
             this.radTxtBxScorePl1.Text = "Player Score";
@@ -117,15 +117,17 @@
             // 
             // pctrPl1
             // 
+            this.pctrPl1.Image = ((System.Drawing.Image)(resources.GetObject("pctrPl1.Image")));
             this.pctrPl1.Location = new System.Drawing.Point(13, 50);
             this.pctrPl1.Name = "pctrPl1";
             this.pctrPl1.Size = new System.Drawing.Size(174, 139);
+            this.pctrPl1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pctrPl1.TabIndex = 4;
             this.pctrPl1.TabStop = false;
             // 
             // lblScorePl1
             // 
-            this.lblScorePl1.Location = new System.Drawing.Point(13, 260);
+            this.lblScorePl1.Location = new System.Drawing.Point(13, 199);
             this.lblScorePl1.Name = "lblScorePl1";
             this.lblScorePl1.Size = new System.Drawing.Size(39, 16);
             this.lblScorePl1.TabIndex = 1;
@@ -164,17 +166,17 @@
             // 
             // 
             this.radGroupBoxPl2.RootElement.Padding = new System.Windows.Forms.Padding(10, 20, 10, 10);
-            this.radGroupBoxPl2.Size = new System.Drawing.Size(200, 330);
+            this.radGroupBoxPl2.Size = new System.Drawing.Size(200, 257);
             this.radGroupBoxPl2.TabIndex = 3;
             this.radGroupBoxPl2.Text = "Player 2";
             this.radGroupBoxPl2.ThemeName = "Aqua";
             // 
             // radTxtBxPl2
             // 
-            this.radTxtBxPl2.Location = new System.Drawing.Point(71, 257);
+            this.radTxtBxPl2.Location = new System.Drawing.Point(14, 221);
             this.radTxtBxPl2.Name = "radTxtBxPl2";
             this.radTxtBxPl2.ReadOnly = true;
-            this.radTxtBxPl2.Size = new System.Drawing.Size(128, 20);
+            this.radTxtBxPl2.Size = new System.Drawing.Size(173, 20);
             this.radTxtBxPl2.TabIndex = 6;
             this.radTxtBxPl2.TabStop = false;
             this.radTxtBxPl2.Text = "Player Score";
@@ -182,15 +184,17 @@
             // 
             // pctrPl2
             // 
+            this.pctrPl2.Image = ((System.Drawing.Image)(resources.GetObject("pctrPl2.Image")));
             this.pctrPl2.Location = new System.Drawing.Point(14, 50);
             this.pctrPl2.Name = "pctrPl2";
             this.pctrPl2.Size = new System.Drawing.Size(173, 139);
+            this.pctrPl2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pctrPl2.TabIndex = 3;
             this.pctrPl2.TabStop = false;
             // 
             // lblScorePl2
             // 
-            this.lblScorePl2.Location = new System.Drawing.Point(14, 257);
+            this.lblScorePl2.Location = new System.Drawing.Point(14, 199);
             this.lblScorePl2.Name = "lblScorePl2";
             this.lblScorePl2.Size = new System.Drawing.Size(39, 16);
             this.lblScorePl2.TabIndex = 2;
@@ -281,7 +285,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(638, 378);
+            this.ClientSize = new System.Drawing.Size(638, 309);
             this.ControlBox = false;
             this.Controls.Add(this.dtGrVwSymb);
             this.Controls.Add(this.radMenu1);
