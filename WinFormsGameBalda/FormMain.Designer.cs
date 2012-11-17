@@ -31,7 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.btnCheck = new Telerik.WinControls.UI.RadButton();
             this.radGroupBoxPl1 = new Telerik.WinControls.UI.RadGroupBox();
             this.btnEditPl1 = new Telerik.WinControls.UI.RadButton();
             this.radTxtBxScorePl1 = new Telerik.WinControls.UI.RadTextBox();
@@ -50,7 +49,7 @@
             this.dtGrVwSymb = new System.Windows.Forms.DataGridView();
             this.radTitleBar1 = new Telerik.WinControls.UI.RadTitleBar();
             this.btnSubmit = new Telerik.WinControls.UI.RadButton();
-            ((System.ComponentModel.ISupportInitialize)(this.btnCheck)).BeginInit();
+            this.bcgWorker = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.radGroupBoxPl1)).BeginInit();
             this.radGroupBoxPl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnEditPl1)).BeginInit();
@@ -70,16 +69,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.radTitleBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnSubmit)).BeginInit();
             this.SuspendLayout();
-            // 
-            // btnCheck
-            // 
-            this.btnCheck.Location = new System.Drawing.Point(244, 265);
-            this.btnCheck.Name = "btnCheck";
-            this.btnCheck.Size = new System.Drawing.Size(141, 35);
-            this.btnCheck.TabIndex = 0;
-            this.btnCheck.Text = "Check the word";
-            this.btnCheck.ThemeName = "Aqua";
-            this.btnCheck.Click += new System.EventHandler(this.Check_Click);
             // 
             // radGroupBoxPl1
             // 
@@ -176,7 +165,7 @@
             this.radGroupBoxPl2.HeaderMargin = new System.Windows.Forms.Padding(0);
             this.radGroupBoxPl2.HeaderText = "Player 2";
             this.radGroupBoxPl2.HeaderTextAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radGroupBoxPl2.Location = new System.Drawing.Point(424, 43);
+            this.radGroupBoxPl2.Location = new System.Drawing.Point(429, 43);
             this.radGroupBoxPl2.Name = "radGroupBoxPl2";
             this.radGroupBoxPl2.Padding = new System.Windows.Forms.Padding(10, 20, 10, 10);
             // 
@@ -247,13 +236,14 @@
             this.dtgridView.Location = new System.Drawing.Point(214, 43);
             this.dtgridView.Name = "dtgridView";
             this.dtgridView.ReadOnly = true;
-            this.dtgridView.RowHeadersWidth = 20;
+            this.dtgridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            this.dtgridView.RowHeadersWidth = 30;
             this.dtgridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.dtgridView.RowsDefaultCellStyle = dataGridViewCellStyle5;
             this.dtgridView.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.dtgridView.Size = new System.Drawing.Size(204, 165);
+            this.dtgridView.Size = new System.Drawing.Size(209, 132);
             this.dtgridView.TabIndex = 4;
             this.dtgridView.DragDrop += new System.Windows.Forms.DragEventHandler(this.dtgridView_DragDrop);
             this.dtgridView.DragEnter += new System.Windows.Forms.DragEventHandler(this.dtgridView_DragEnter);
@@ -268,16 +258,17 @@
             this.dtGrVwSymb.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             this.dtGrVwSymb.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dtGrVwSymb.GridColor = System.Drawing.SystemColors.Control;
-            this.dtGrVwSymb.Location = new System.Drawing.Point(214, 214);
+            this.dtGrVwSymb.Location = new System.Drawing.Point(214, 181);
             this.dtGrVwSymb.Name = "dtGrVwSymb";
             this.dtGrVwSymb.ReadOnly = true;
-            this.dtGrVwSymb.RowHeadersWidth = 20;
+            this.dtGrVwSymb.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            this.dtGrVwSymb.RowHeadersWidth = 30;
             this.dtGrVwSymb.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.TopCenter;
             dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.dtGrVwSymb.RowsDefaultCellStyle = dataGridViewCellStyle6;
             this.dtGrVwSymb.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.dtGrVwSymb.Size = new System.Drawing.Size(204, 45);
+            this.dtGrVwSymb.Size = new System.Drawing.Size(209, 68);
             this.dtGrVwSymb.TabIndex = 6;
             this.dtGrVwSymb.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dtGrVwSymb_CellMouseDown);
             // 
@@ -285,15 +276,14 @@
             // 
             this.radTitleBar1.Location = new System.Drawing.Point(-2, -2);
             this.radTitleBar1.Name = "radTitleBar1";
-            this.radTitleBar1.Size = new System.Drawing.Size(641, 27);
+            this.radTitleBar1.Size = new System.Drawing.Size(643, 27);
             this.radTitleBar1.TabIndex = 7;
             this.radTitleBar1.TabStop = false;
             this.radTitleBar1.ThemeName = "Aqua";
             // 
             // btnSubmit
             // 
-            this.btnSubmit.Enabled = false;
-            this.btnSubmit.Location = new System.Drawing.Point(244, 306);
+            this.btnSubmit.Location = new System.Drawing.Point(247, 266);
             this.btnSubmit.Name = "btnSubmit";
             this.btnSubmit.Size = new System.Drawing.Size(141, 34);
             this.btnSubmit.TabIndex = 8;
@@ -301,12 +291,16 @@
             this.btnSubmit.ThemeName = "Aqua";
             this.btnSubmit.Click += new System.EventHandler(this.btnSubmit_Click);
             // 
+            // bcgWorker
+            // 
+            this.bcgWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bcgWorker_DoWork);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.ClientSize = new System.Drawing.Size(638, 349);
+            this.ClientSize = new System.Drawing.Size(640, 349);
             this.ControlBox = false;
             this.Controls.Add(this.btnSubmit);
             this.Controls.Add(this.radTitleBar1);
@@ -314,14 +308,11 @@
             this.Controls.Add(this.dtgridView);
             this.Controls.Add(this.radGroupBoxPl2);
             this.Controls.Add(this.radGroupBoxPl1);
-            this.Controls.Add(this.btnCheck);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.TopMost = true;
-            ((System.ComponentModel.ISupportInitialize)(this.btnCheck)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.radGroupBoxPl1)).EndInit();
             this.radGroupBoxPl1.ResumeLayout(false);
             this.radGroupBoxPl1.PerformLayout();
@@ -348,7 +339,6 @@
 
         #endregion
 
-        private Telerik.WinControls.UI.RadButton btnCheck;
         private Telerik.WinControls.UI.RadGroupBox radGroupBoxPl1;
         private Telerik.WinControls.UI.RadTextBox radTxtBxScorePl1;
         private System.Windows.Forms.PictureBox pctrPl1;
@@ -367,6 +357,7 @@
         private Telerik.WinControls.UI.RadButton btnEditPl1;
         private Telerik.WinControls.UI.RadTitleBar radTitleBar1;
         private Telerik.WinControls.UI.RadButton btnSubmit;
+        private System.ComponentModel.BackgroundWorker bcgWorker;
     }
 }
 

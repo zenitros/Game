@@ -7,19 +7,44 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
-//OOP
-//Async
 
 namespace WinFormsGameBalda
 {
     public partial class FormMain : Form
     {
-        private static bool pr,player=false;
-        private static int Score1=0, Score2=0;
+        private static Files objFiles = new Files();
+        private Words objWords = new Words();
+        private static StringBuilder sb;
+        private bool player;
+        private static int Score1 = 0, Score2 = 0;
         private string[][] Massive = new string[5][];
         private int[][] check = new int[2][];
-        private string[] symbols = new string[5];
+        private string[][] symbols = new string[2][];
+
+        public StringBuilder StrBuild
+        {
+            get { return sb; }
+        }
+        public bool indicationPl
+        {
+            get { return player; }
+        }
+        public int ScorePL1
+        {
+            get { return Score1; }
+            set { Score1 = value; }
+        }
+        public int ScorePL2
+        {
+            get { return Score2; }
+            set { Score2 = value; }
+        }
+
         public FormMain()
+        {
+        }
+
+        public FormMain(bool access)
         {
             for (int i = 0; i < check.Length; i++)
             {
@@ -27,70 +52,22 @@ namespace WinFormsGameBalda
             }
             InitializeComponent();
             radTitleBar1.Text = "Molchanov, Teslya, Shevchenko";
-            InitializeMatrixProgramly();
-            DisplayMatrix(Massive, dtgridView);
-            for (int i = 0; i < Massive.Length; i++)
-                for (int j = 0; j < Massive[i].Length; j++)
-                    if (Massive[i][j] != "")
-                    {
-                        AddCheck(i, j);
-                    }
-            // Display Symbol Matrix
-            dtGrVwSymb.ColumnCount = symbols.Length;
-            dtGrVwSymb.Rows[0].Height = 30;
-            for (int i = 0; i < symbols.Length; i++)
-            {
-                dtGrVwSymb.Columns[i].Width = 35;
-            }
-            dtGrVwSymb.Rows.Add(1);
-            for (int j = 0; j < symbols.Length; j++)
-                dtGrVwSymb.Rows[0].Cells[j].Value = symbols[j].ToString();
-        }
-        private void InitializeMatrixProgramly()
-        {
-            Massive[0] = new string[5] { "", "", "", "", "" };
-            Massive[1] = new string[5] { "", "", "", "", "" };
-            Massive[2] = new string[5] { "A","G","E","N","T" };
-            Massive[3] = new string[5] { "", "", "", "", "" };
-            Massive[4] = new string[5] { "", "", "", "", "" };
-            symbols = new string[5] { "A", "F", "O", "L", "B" };
-        }
-        /// <summary>
-        /// Display Matrix on component DataGridView.
-        /// </summary>
-        /// <param name="Massive">Matrix.</param>
-        /// <param name="dtgrdvw">DataGridView.</param>
-        public void DisplayMatrix(string[][] Massive, DataGridView dtgrdvw)
-        {
-            try
-            {
-                int max_col = Massive[0].Length;
-                for (int i = 0; i < Massive.Length; i++)
-                    if (Massive[i].Length > max_col)
-                        max_col = Massive[i].Length;
-                dtgrdvw.ColumnCount = 0;
-                dtgrdvw.ColumnCount = max_col;
-                dtgrdvw.Rows.Add(Massive.Length);
-                dtgrdvw.Visible = true;
-                for (int i = 0; i < max_col; i++)
-                {
-                    dtgridView.AutoSize = false;
-                    dtgrdvw.Columns[i].Width = 35;
-                    dtgridView.Rows[i].Height = 30;
-                    dtgrdvw.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
-                }
-                for (int i = 0; i < Massive.Length; i++)
-                    for (int j = 0; j < Massive[i].Length; j++)
-                        dtgrdvw.Rows[i].Cells[j].Value = Massive[i][j].ToString();
-            }
-            catch { MessageBox.Show("Error"); }
+            objWords.InitializeMatrixProgramly(Massive,symbols);
+            objWords.DisplayMatrix(Massive, dtgridView);
+            objWords.InitializeStartWord(Massive,ref check);
+            objWords.DisplayMatrix(symbols, dtGrVwSymb);
+            objFiles.CreateTemporaryFile();
         }
         
         private void dtGrVwSymb_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
-            dtGrVwSymb.DoDragDrop(dtGrVwSymb.Rows
-            [e.RowIndex].Cells[e.ColumnIndex].Value.ToString(),
-            DragDropEffects.Copy);
+            try
+            {
+                dtGrVwSymb.DoDragDrop(dtGrVwSymb.Rows
+                [e.RowIndex].Cells[e.ColumnIndex].Value.ToString(),
+                DragDropEffects.Copy);
+            }
+            catch { }
         }
 
         private void dtgridView_DragEnter(object sender, DragEventArgs e)
@@ -120,37 +97,34 @@ namespace WinFormsGameBalda
                     //check the rows
                     for (int m = 0; m < check[1].Length; m++)
                         if (j == check[1][m])
-                            if (Fix(i, m))
+                            if (objWords.Fix(i, m,check))
                             {
                                 // displays the new value
                                 dtgridView.Rows[i].Cells[j].Value = value;
                                 pr = true;
-                                AddCheck(i, j);
+                                objWords.AddCheck(i, j,ref check);
+                                if (check.Length == 25)
+                                {
+                                    if (Score1 > Score2)
+                                    {
+                                        MessageBox.Show("Player1 Win!", "Game over!");
+                                        objFiles.AddMaxScore(Score1);
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("Player2 Win!", "Game over!");
+                                        objFiles.AddMaxScore(Score2);
+                                    }
+                                    Application.Exit();
+                                }
+                                dtGrVwSymb.Enabled = false;
                                 break;
                             }
                     if (!pr)
                         MessageBox.Show("You must drag the symbol near main word!");
-                    return;
                 }
-                else return;
+                return;
             }
-        }
-
-        private void AddCheck(int i, int j)
-        {
-            var m = check[check.Length - 2].Length;
-            var n = check[check.Length - 1].Length;
-            Array.Resize(ref check[check.Length - 2], m + 1);
-            Array.Resize(ref check[check.Length - 1], n + 1);
-            check[0][m] = i;
-            check[1][n] = j;
-        }
-
-        private bool Fix(int i, int m)
-        {
-            if ((i + 1) == check[0][m] || (i - 1) == check[0][m])
-                return true;
-            else return false;
         }
 
         private void btnEditPl1_Click(object sender, EventArgs e)
@@ -173,74 +147,61 @@ namespace WinFormsGameBalda
             else { radTxtBxNm2.Enabled = false; btnEditPl2.Text = "Edit info"; }
         }
 
-        private void Check_Click(object sender, EventArgs e)
+        private void btnSubmit_Click(object sender, EventArgs e)
         {
-            pr = false;
-            var sb = new StringBuilder();
-            var selectedCellCount =
-            dtgridView.GetCellCount(DataGridViewElementStates.Selected);
-            if (selectedCellCount > 2)
+            bcgWorker.RunWorkerAsync();
+        }
+
+        private void bcgWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            try
             {
-                if (dtgridView.AreAllCellsSelected(true))
+                sb = new StringBuilder();
+                sb.Clear();
+                var selectedCellCount =
+                dtgridView.GetCellCount(DataGridViewElementStates.Selected);
+                if (selectedCellCount > 2)
                 {
-                    MessageBox.Show("Select some cells,but not all of them!", "Selected Cells");
+                    if (dtgridView.AreAllCellsSelected(true))
+                    {
+                        MessageBox.Show("Select some cells, but not all of them!", "Selected Cells");
+                    }
+                    else
+                    {
+                        for (int i = selectedCellCount - 1;
+                            i >= 0; --i)
+                        {
+                            var a = dtgridView.SelectedCells[i].RowIndex;
+                            var b = dtgridView.SelectedCells[i].ColumnIndex;
+                            sb.Append(dtgridView.Rows[a].Cells[b].Value);
+                        }
+                        if (objFiles.ReadFromFile())
+                        {
+                            if (objFiles.AddToFile(sb.ToString()))
+                            { sb.Clear(); throw new ArgumentException("This word is alredy used!"); }
+                            objFiles.AddScore(player);
+                        }
+                    }
+                }
+                else { MessageBox.Show("You should select char's more than 2!"); }
+
+                dtGrVwSymb.Enabled = true;
+                radTxtBxScorePl1.Text = Score1.ToString();
+                radTxtBxScorePl2.Text = Score2.ToString();
+                if (player)
+                {
+                    MessageBox.Show("Player1 playes now!");
+                    player = false;
                 }
                 else
                 {
-                    for (int i = selectedCellCount - 1;
-                        i >= 0; --i)
-                    {
-                        var a = dtgridView.SelectedCells[i].RowIndex;
-                        var b = dtgridView.SelectedCells[i].ColumnIndex;
-                        sb.Append(dtgridView.Rows[a].Cells[b].Value);
-                    }
-                    MessageBox.Show(sb.ToString(), "Your string");
-                    btnSubmit.Enabled = true;
-                    ReadFromFile(sb);
+                    MessageBox.Show("Player2 playes now!");
+                    player = true;
+
                 }
             }
-        }
-
-        /// <summary>
-        /// Reads from file and checking the word on existing in vocabualary
-        /// </summary>
-        /// <param name="sb">word</param>
-        private void ReadFromFile(StringBuilder sb)
-        {
-            using (var reader = new StreamReader("Voc.txt"))
-            {
-                var str = "";
-                for (int i = 0; (str = reader.ReadLine()) != null; i++)
-                    if (str == sb.ToString())
-                    {
-                        AddScore();
-                        pr = true;
-                    }
-            }
-            if (!pr) MessageBox.Show("This word, does not exist!", "Warning");
-        }
-
-        private void AddScore()
-        {
-            if(!player) Score1 +=100;
-            else Score2+=100;
-        }
-
-        private void btnSubmit_Click(object sender, EventArgs e)
-        {
-            btnSubmit.Enabled = false;
-            radTxtBxScorePl1.Text = Score1.ToString();
-            radTxtBxScorePl2.Text = Score2.ToString();
-            if (player)
-            {
-                MessageBox.Show("Player1 playes now!");
-                player = false;
-            }
-            else
-            {
-                MessageBox.Show("Player2 playes now!");
-                player = true;
-            }
+            catch (ArgumentException ex) { MessageBox.Show(ex.Message); }
+            catch { MessageBox.Show("Fatal error!", "Check the word"); }
         }
     }
 }
